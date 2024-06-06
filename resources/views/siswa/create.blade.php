@@ -18,9 +18,32 @@
                 </div>
             </div>
             <div class="mb-3 row">
+                <label for="TANGGAL LAHIR" class="col-sm-2 col-form-label">TANGGAL LAHIR</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" name='TANGGALLAHIR' value="{{ Session::get('TANGGALLAHIR') }}" id="TANGGALLAHIR">
+                </div>
+            </div>
+            <div class="mb-2 row">
                 <label for="JURUSAN" class="col-sm-2 col-form-label">JURUSAN</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name='JURUSAN' value="{{ Session::get('JURUSAN') }}" id="JURUSAN">
+                   
+                <select name="JURUSAN" id=""> 
+                <option value="RPL">RPL</option>
+                <option value="DKV">DKV</option>
+                <option value="MM">MM</option>
+                <option value="APHP">APHP</option>
+                <option value="APAT">APAT</option>
+                <option value="ATU">ATU</option>
+                <option value="APT">APT</option>
+                <option value="ATP">ATP</option>
+                </div>
+            </select>
+               
+            </div>
+            <div class="mb-3 row">
+                <label for="ALAMAT" class="col-sm-2 col-form-label">ALAMAT</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name='ALAMAT' value="{{ Session::get('ALAMAT') }}" id="ALAMAT">
                 </div>
             </div>
             <div class="mb-3 row">

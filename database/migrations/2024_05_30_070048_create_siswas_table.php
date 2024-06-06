@@ -15,7 +15,9 @@ return new class extends Migration
 $table->integer('NIM');
 $table->unique('NIM');
 $table->string('NAMA');
+$table->date('TANGGALLAHIR');
 $table->string('JURUSAN');
+$table->string('ALAMAT');
 
 
         });

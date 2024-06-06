@@ -19,7 +19,9 @@ class siswacontroller extends Controller
         if(strlen($katakunci)){
             $data = Siswa::where('NIM', 'like', '%' . $katakunci . '%')
                 ->orWhere('NAMA', 'like', '%' . $katakunci . '%')
+                ->orWhere('TANGGALLAHIR', 'like', '%' . $katakunci . '%')
                 ->orWhere('JURUSAN', 'like', '%' . $katakunci . '%')
+                ->orWhere('ALAMAT', 'like', '%' . $katakunci . '%')
                 ->paginate($jumlahbaris);
         } else {
             $data = Siswa::orderBy('NIM', 'desc')->paginate($jumlahbaris);
@@ -38,9 +40,6 @@ class siswacontroller extends Controller
     {
         return view('siswa.create');
     }
-
-    
-
     /**
      * Store a newly created resource in storage.
      */
@@ -48,25 +47,31 @@ class siswacontroller extends Controller
     { 
        Session::flash('nim', $request->nim);
        Session::flash('nama', $request->nama);
-       Session::flash('jurusan', $request->jurusan);
+       Session::flash('TANGGALLAHIR', $request->TANGGALLAHIR);
+       Session::flash('alamat', $request->alamat);
 
        $request->validate([
             'NIM'=> 'required|numeric|unique:siswa,NIM',
             'NAMA'=> 'required',
-            'JURUSAN'=> 'required',
+            'TANGGALLAHIR'=> 'required',
+            'ALAMAT'=> 'required',
        ],
         [
             'NIM.required'=>'NIM wajib di isi',
             'NIM.numeric'=>'NIM wajib dalam angka',
             'NIM.unique'=>'NIM yang di isikan sudah dalam data base',
             'NAMA.required'=>'NAMA wajib di isi',
+            'TANGGALLAHIR.required'=>'UMUR wajib di isi',
             'JURUSAN.required'=>'JURUSAN wajib di isi',
+            'ALAMAT.required'=>'ALAMAT wajib di isi',
         ]);
 
         $data = [
             'NIM'=>$request->NIM,
             'NAMA'=>$request->NAMA,
+            'TANGGALLAHIR'=>$request->TANGGALLAHIR,
             'JURUSAN'=>$request->JURUSAN,
+            'ALAMAT'=>$request->ALAMAT,
         ];
 
         siswa::create ($data);
@@ -77,9 +82,10 @@ class siswacontroller extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($NIM)
     {
-        //
+        $siswa = Siswa::where('NIM', $NIM)->firstOrFail();
+        return view('siswa.show', compact('siswa'));
     }
 
     /**
@@ -98,15 +104,21 @@ class siswacontroller extends Controller
     {
         $request->validate([
             'NAMA'=> 'required',
+            'TANGGALLAHIR'=> 'required',
             'JURUSAN'=> 'required',
+            'ALAMAT'=> 'required',
         ],[
             'NAMA.required'=>'NAMA wajib di isi',
+            'TANGGALLAHIR.required'=>'TANGGAL LAHIR wajib di isi',
             'JURUSAN.required'=>'JURUSAN wajib di isi',
+            'ALAMAT.required'=>'ALAMAT wajib di isi',
         ]);
 
         $data = [
             'NAMA'=>$request->NAMA,
+            'TANGGALLAHIR'=>$request->TANGGALLAHIR,
             'JURUSAN'=>$request->JURUSAN,
+            'ALAMAT'=>$request->ALAMAT,
         ];
 
         siswa::where('NIM', $id)->update($data);
